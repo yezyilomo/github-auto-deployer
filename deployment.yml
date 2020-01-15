@@ -1,11 +1,13 @@
-settle-frontend:
+settle-frontend:  # Repository Name
+  # Commands to run
   - cd /var/www/settle/frontend/ 
   - git pull origin master 
   - yarn install 
   - yarn run build 
 
 
-settle:
+settle:  # Repository Name
+  # Commands to run
   - cd ~/settle/ 
   - git fetch origin master 
   - git merge origin/master 
