@@ -1,0 +1,14 @@
+settle-frontend:
+  - cd /var/www/settle/frontend/ 
+  - git pull origin master 
+  - yarn install 
+  - yarn run build 
+
+
+settle:
+  - cd ~/settle/ 
+  - git fetch origin master 
+  - git merge origin/master 
+  - python manage.py makemigrations 
+  - python manage.py makemigrations api 
+  - python manage.py migrate
