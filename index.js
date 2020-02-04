@@ -6,11 +6,13 @@ const createHandler = require('github-webhook-handler');
 
 
 // We avoid to hardcode the secret in the code, 
-// you should provide it with an ENV variable before running this script
-const { MY_SECRET } = process.env;
-const { CONF_FILE } = process.env;
+// You should provide it with an ENV variable before running this script
+const MY_SECRET = process.env.MY_SECRET;
 
-// port is default on 6767
+// Deployment config file
+const CONF_FILE = process.env.CONF_FILE;
+
+// Port is default on 6767
 const PORT = process.env.PORT || 6767;
 
 let fileContents = fs.readFileSync(CONF_FILE, 'utf8');
@@ -21,7 +23,7 @@ var handler = createHandler({ path: '/', secret: MY_SECRET });
 http.createServer(function (req, res) {
     handler(req, res, function (err) {
         res.statusCode = 404
-        res.end('no such location')
+        res.end('No such location')
     })
 }).listen(PORT);
 
@@ -37,6 +39,7 @@ handler.on('pull_request', function (event) {
     // the action of closed on pull_request event means either it is merged or declined
     if (scripts[repository] !== undefined && action === 'closed') {
         // we should deploy now
+        console.log('Deploying %s...', repository);
         shell.exec(scripts[repository].join(" && "));
     }
 });

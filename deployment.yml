@@ -10,7 +10,5 @@ settle:  # Repository Name
   # Commands to run
   - cd ~/settle/ 
   - git fetch origin master 
-  - git merge origin/master 
-  - python manage.py makemigrations 
-  - python manage.py makemigrations api 
+  - git pull origin master 
   - python manage.py migrate
