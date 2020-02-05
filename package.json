@@ -9,7 +9,7 @@
   "dependencies": {
     "github-webhook-handler": "^1.0.0",
     "js-yaml": "^3.13.1",
-    "pm2": "^4.2.1",
+    "pm2": "^4.2.3",
     "shelljs": "^0.8.3"
   }
 }
