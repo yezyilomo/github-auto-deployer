@@ -1,13 +1,16 @@
-settle-frontend:  # Repository Name
-  # Commands to run
+# Demo deployment file
+# Delete this and put your deployment scripts here
+
+settle-frontend:  # Repository Name(Should match the one on GitHub)
+  # Commands to run during deloyment
   - cd /var/www/settle/frontend/ 
   - git pull origin master 
   - yarn install 
   - yarn run build 
 
 
-settle:  # Repository Name
-  # Commands to run
+settle:  # Repository Name(Should match the one on GitHub)
+  # Commands to run during deployment
   - cd ~/settle/ 
   - git fetch origin master 
   - git pull origin master 
