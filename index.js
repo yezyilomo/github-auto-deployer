@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require('fs');
 const http = require('http');
 const yaml = require('js-yaml');
 const shell = require('shelljs');
@@ -9,14 +9,11 @@ const createHandler = require('github-webhook-handler');
 // You should provide it with an ENV variable before running this script
 const MY_SECRET = process.env.MY_SECRET;
 
-// Deployment config file
-const CONF_FILE = process.env.CONF_FILE;
+// Deployment scripts file
+const DEPLOYMENT_FILE = process.env.DEPLOYMENT_FILE;
 
 // Port is default on 6767
 const PORT = process.env.PORT || 6767;
-
-let fileContents = fs.readFileSync(CONF_FILE, 'utf8');
-let scripts = yaml.safeLoadAll(fileContents)[0];
 
 var handler = createHandler({ path: '/', secret: MY_SECRET });
 
@@ -32,14 +29,24 @@ handler.on('error', function (err) {
 })
 
 handler.on('pull_request', function (event) {
+    // Read deployment scripts
     const repository = event.payload.repository.name;
     const action = event.payload.action;
 
     console.log('Received a Pull Request for %s to %s', repository, action);
-    // the action of closed on pull_request event means either it is merged or declined
-    if (scripts[repository] !== undefined && action === 'closed') {
-        // we should deploy now
-        console.log('Deploying %s...', repository);
-        shell.exec(scripts[repository].join(" && "));
+    // The action of closed on pull_request event means either it is merged or declined
+    if (action === 'closed') {
+        const fileContents = fs.readFileSync(DEPLOYMENT_FILE, 'utf8');
+        const scripts = yaml.safeLoadAll(fileContents)[0];
+
+        if (scripts[repository] !== undefined){
+            // We should run deployment scripts
+            console.log('Deploying %s...', repository);
+            shell.exec(scripts[repository].join(" && "));
+            console.log('Deployment of %s is done.', repository);
+        }
+        else{
+            console.log('No deployment scripts for %s repository.', repository)
+        }
     }
 });
