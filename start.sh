@@ -1,5 +1,5 @@
 #!/bin/bash
-MY_SECRET=hello;
+MY_SECRET=<Your Webhook Secret>;
 APP_NAME=github-auto-deployer;
 APP_DIR=~/.github-auto-deployer;
 APP_ENTRY_POINT=$APP_DIR/index.js;
