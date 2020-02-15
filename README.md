@@ -11,7 +11,7 @@ Automated GitHub deployment using Webhooks
 
 Running install.sh script should create .github-auto-deployer on your home directory, now go to that directory and finish setting up few things as explained below.
 
-Add Webhook Secret from the repository you want to deploy and put it on <Your Webhook Secret> in `.github-auto-deployer/start.sh` file. To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhook, Here you have to add your server URL(The one pointing to github-auto-deployer service e.g https://yourserveraddress.com:6767) and the Webhook secret, you will also have to specify events you would like to trigger this webhook, Here you can select(check) Pull requests, this will trigger your webhook only when you create a pull request or merge(close) it, but the deployment will be done only when you merge your PR to master branch.
+Add Webhook Secret from the repository you want to deploy and put it on &lt;Your Webhook Secret&gt;  in `.github-auto-deployer/start.sh` file. To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhook, Here you have to add your server URL(The one pointing to github-auto-deployer service e.g https://yourserveraddress.com:6767) and the Webhook secret, you will also have to specify events you would like to trigger this webhook, Here you can select(check) Pull requests, this will trigger your webhook only when you create a pull request or merge(close) it, but the deployment will be done only when you merge your PR to master branch.
 
 Write your deployment scripts on `.github-auto-deployer/deployment.yml` file.
 
