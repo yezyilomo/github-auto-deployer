@@ -36,6 +36,7 @@ handler.on('pull_request', function (event) {
     console.log('Received a Pull Request for %s to %s', repository, action);
     // The action of closed on pull_request event means either it is merged or declined
     if (action === 'closed') {
+        // Read deployment scripts
         const fileContents = fs.readFileSync(DEPLOYMENT_FILE, 'utf8');
         const scripts = yaml.safeLoadAll(fileContents)[0];
 
@@ -46,7 +47,7 @@ handler.on('pull_request', function (event) {
             console.log('Deployment of %s is done.', repository);
         }
         else{
-            console.log('No deployment scripts for %s repository.', repository)
+            console.log('No deployment scripts for %s repository.', repository);
         }
     }
 });
