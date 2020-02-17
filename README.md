@@ -1,7 +1,7 @@
 # github-auto-deployer
 Automated GitHub deployment using Webhooks
 
-#Getting started
+## Getting started
 
 `git clone https://github.com/yezyilomo/github-auto-deployer`
 
