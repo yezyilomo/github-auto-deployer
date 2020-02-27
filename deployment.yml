@@ -2,7 +2,7 @@
 # Delete this and put your deployment scripts here
 
 settle-frontend:  # Repository Name(Should match the one on GitHub)
-  # Commands to run during deloyment
+  # Commands to run on your server during deployment
   - cd /var/www/settle/frontend/ 
   - git pull origin master 
   - yarn install 
@@ -10,7 +10,7 @@ settle-frontend:  # Repository Name(Should match the one on GitHub)
 
 
 settle:  # Repository Name(Should match the one on GitHub)
-  # Commands to run during deployment
+  # Commands to run on your server during deployment
   - cd ~/settle/ 
   - git pull origin master 
   - python manage.py migrate
