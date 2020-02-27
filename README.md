@@ -1,5 +1,5 @@
 # github-auto-deployer
-Automated GitHub deployment using Webhooks
+Automate deployments from GitHub to your server using Webhooks
 
 ## Getting started
 
