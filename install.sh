@@ -3,6 +3,20 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 DESTINATION_DIR=~/.github-auto-deployer;
 
+if [ -d $DESTINATION_DIR ]
+then
+    echo -n "Directory $DESTINATION_DIR already exists. Are you sure you want to delete it and re-install? [Y/n]  ";
+    read response;
+    
+    if [ $response = "Y" ] || [ $response = "y" ]
+    then
+        rm -r $DESTINATION_DIR;
+    else
+        exit;
+    fi;
+fi;
+
+
 mkdir $DESTINATION_DIR &&
 
 cd $SCRIPT_DIR &&
