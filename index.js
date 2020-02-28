@@ -19,8 +19,11 @@ var handler = createHandler({ path: '/', secret: MY_SECRET });
 
 http.createServer(function (req, res) {
     handler(req, res, function (err) {
-        res.statusCode = 404
-        res.end('No such location')
+        fs.readFile('./index.html',function (err, data){
+            res.writeHead(200, {'Content-Type': 'text/html','Content-Length': data.length});
+            res.write(data);
+            res.end();
+        });
     })
 }).listen(PORT);
 
