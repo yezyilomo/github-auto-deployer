@@ -1,4 +1,5 @@
 const fs = require('fs');
+const url = require("url");
 const http = require('http');
 const yaml = require('js-yaml');
 const shell = require('shelljs');
@@ -18,12 +19,21 @@ const PORT = process.env.PORT || 6767;
 var handler = createHandler({ path: '/', secret: MY_SECRET });
 
 http.createServer(function (req, res) {
+    let pathname = url.parse(req.url).pathname;
     handler(req, res, function (err) {
-        fs.readFile('./index.html',function (err, data){
-            res.writeHead(200, {'Content-Type': 'text/html','Content-Length': data.length});
-            res.write(data);
+        if (req.url === "/" && req.method === "GET"){
+            fs.readFile('./index.html',function (err, data){
+                res.writeHead(200, {'Content-Type': 'text/html','Content-Length': data.length});
+                res.write(data);
+                res.end();
+            });
+        }
+        else {
+            console.log("No request handler found for " + pathname);
+            res.writeHead(404, {"Content-Type": "text/plain"});
+            res.write("404 Not found");
             res.end();
-        });
+        }
     })
 }).listen(PORT);
 
