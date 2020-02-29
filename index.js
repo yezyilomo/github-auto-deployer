@@ -47,7 +47,7 @@ handler.on('pull_request', function (event) {
     const action = event.payload.action;
 
     console.log('Received a Pull Request for %s to %s', repository, action);
-    // The action of closed on pull_request event means either it is merged or declined
+    // The action `closed` on pull_request event means it is either merged or declined
     if (action === 'closed') {
         // Read deployment scripts
         const fileContents = fs.readFileSync(DEPLOYMENT_FILE, 'utf8');
