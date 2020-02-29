@@ -10,10 +10,10 @@ const createHandler = require('github-webhook-handler');
 // You should provide it with an ENV variable before running this script
 const MY_SECRET = process.env.MY_SECRET;
 
-// Deployment scripts file
+// Get deployment scripts file
 const DEPLOYMENT_FILE = process.env.DEPLOYMENT_FILE;
 
-// Port is default on 6767
+// Get port if not provided us 6767 as the default
 const PORT = process.env.PORT || 6767;
 
 var handler = createHandler({ path: '/', secret: MY_SECRET });
