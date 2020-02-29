@@ -42,7 +42,6 @@ handler.on('error', function (err) {
 })
 
 handler.on('pull_request', function (event) {
-    // Read deployment scripts
     const repository = event.payload.repository.name;
     const action = event.payload.action;
 
