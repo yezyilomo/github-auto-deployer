@@ -2,6 +2,7 @@
 Automate deployments from GitHub to your server using Webhooks
 
 ## Getting started
+First Login to your server(Where you want to deploy to)
 
 `git clone https://github.com/yezyilomo/github-auto-deployer`
 
