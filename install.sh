@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Get install script dir
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 DESTINATION_DIR=~/.github-auto-deployer;
