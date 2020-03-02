@@ -44,10 +44,11 @@ handler.on('error', function (err) {
 handler.on('pull_request', function (event) {
     const repository = event.payload.repository.name;
     const action = event.payload.action;
+    const isMerged = event.payload.pull_request.merged;
 
     console.log('Received a Pull Request for %s to %s', repository, action);
     // The action `closed` on pull_request event means it is either merged or declined
-    if (action === 'closed') {
+    if (action === 'closed' && isMerged) {
         // Read deployment scripts
         const fileContents = fs.readFileSync(DEPLOYMENT_FILE, 'utf8');
         const scripts = yaml.safeLoadAll(fileContents)[0];
