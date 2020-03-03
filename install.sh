@@ -27,6 +27,7 @@ cp index.js $DESTINATION_DIR &&
 cp yarn.lock $DESTINATION_DIR &&
 cp index.html $DESTINATION_DIR &&
 cp package.json $DESTINATION_DIR &&
+cp uninstall.sh $DESTINATION_DIR &&
 cp deployment.yml $DESTINATION_DIR &&
 
 cd $DESTINATION_DIR &&
