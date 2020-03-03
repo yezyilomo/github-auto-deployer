@@ -2,4 +2,4 @@
 
 APP_DIR=~/.github-auto-deployer;
 
-rm -r APP_DIR
+rm -r $APP_DIR

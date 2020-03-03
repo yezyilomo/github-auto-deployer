@@ -20,23 +20,13 @@ fi &&
 if [ -d $DESTINATION_DIR ]
 then
     echo "Installing changes...";
+    APP_CONF=`cat $DESTINATION_DIR/app.conf`;
+    DEPLOYMENT_SCRIPTS=`cat $DESTINATION_DIR/deployment.yaml`;
+    rm -r $DESTINATION_DIR;
+    . $SCRIPT_DIR/install.sh;
+    "$APP_CONF" > $DESTINATION_DIR/app.conf;
+    "$DEPLOYMENT_SCRIPTS" > $DESTINATION_DIR/deployment.yml;
 else
     echo "GitHub Auto Deployer is not installed, Execute `install.sh` to install it.";
     exit;
-fi &&
-
-
-cd $SCRIPT_DIR &&
-cp start.sh $DESTINATION_DIR &&
-cp index.js $DESTINATION_DIR &&
-cp yarn.lock $DESTINATION_DIR &&
-cp index.html $DESTINATION_DIR &&
-cp uninstall.sh $DESTINATION_DIR &&
-cp package.json $DESTINATION_DIR &&
-
-cd $DESTINATION_DIR &&
-
-yarn install &&
-yarn global add pm2 &&
-
-echo "**************Update completed**************";
+fi;
