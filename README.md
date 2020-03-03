@@ -12,7 +12,7 @@ First Login to your server(Where you want to deploy to)
 
 Running `install.sh` script should create `.github-auto-deployer` directory on your home directory, now go to that directory and finish setting up few things as explained below.
 
-Add Webhook Secret from the repository you want to deploy and put it on `<Your Webhook Secret>`  in `.github-auto-deployer/start.sh` file.
+Add Webhook Secret from the repository you want to deploy and put it on `<Your Webhook Secret>`  in `.github-auto-deployer/app.conf` file.
 
 To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhook, Here you have to 
 - Add your server URL(The one pointing to github-auto-deployer service e.g https://yourserveraddress.com:6767)
@@ -35,6 +35,6 @@ Run `start.sh` script i.e
 
 That's it..
 
-Your service will be running on port 6767 by default, You can try to access it with https://yourserveraddress.com:6767, If you want to run on another port you can specify it with `PORT` option in `start.sh` script.
+Your service will be running on port 6767 by default, You can try to access it with https://yourserveraddress.com:6767, If you want to run on another port you can specify it with `PORT` option in `app.conf` file.
 
 NOTE: All configurations should be done on `~/.github-auto-deployer` directory which is created after running `install.sh` script, You should change nothing on the directory of cloned repository.
