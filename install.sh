@@ -2,34 +2,34 @@
 
 # Get install script dir
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
-DESTINATION_DIR=~/.github-auto-deployer;
+APP_DIR=~/.github-auto-deployer;
 
-if [ -d $DESTINATION_DIR ]
+if [ -d $APP_DIR ]
 then
-    echo -n "Directory $DESTINATION_DIR already exists. Are you sure you want to delete it and re-install? [Y/n]  ";
+    echo -n "Directory $APP_DIR already exists. Are you sure you want to delete it and re-install? [Y/n]  ";
     read response;
     
     if [ $response = "Y" ] || [ $response = "y" ]
     then
-        rm -r $DESTINATION_DIR;
+        rm -r $APP_DIR;
     else
         exit;
     fi;
 fi;
 
 
-mkdir $DESTINATION_DIR &&
+mkdir $APP_DIR &&
 
 cd $SCRIPT_DIR &&
-cp app.conf $DESTINATION_DIR &&
-cp start.sh $DESTINATION_DIR &&
-cp index.js $DESTINATION_DIR &&
-cp yarn.lock $DESTINATION_DIR &&
-cp index.html $DESTINATION_DIR &&
-cp package.json $DESTINATION_DIR &&
-cp deployment.yml $DESTINATION_DIR &&
+cp app.conf $APP_DIR &&
+cp start.sh $APP_DIR &&
+cp index.js $APP_DIR &&
+cp yarn.lock $APP_DIR &&
+cp index.html $APP_DIR &&
+cp package.json $APP_DIR &&
+cp deployment.yml $APP_DIR &&
 
-cd $DESTINATION_DIR &&
+cd $APP_DIR &&
 
 yarn install &&
 yarn global add pm2
