@@ -26,11 +26,12 @@ cp start.sh $DESTINATION_DIR &&
 cp index.js $DESTINATION_DIR &&
 cp yarn.lock $DESTINATION_DIR &&
 cp index.html $DESTINATION_DIR &&
-cp install.sh $DESTINATION_DIR &&
 cp package.json $DESTINATION_DIR &&
 cp deployment.yml $DESTINATION_DIR &&
 
 cd $DESTINATION_DIR &&
 
 yarn install &&
-yarn global add pm2
+yarn global add pm2 &&
+
+echo "**************Installation completed**************";
