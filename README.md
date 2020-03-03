@@ -40,7 +40,7 @@ Your service will be running on port 6767 by default, You can try to access it w
 NOTE: All configurations should be done on `~/.github-auto-deployer` directory which is created after running `install.sh` script, You should change nothing on the directory of cloned repository.
 
 More options
-- `update.sh`: This script is used to update GitHub auto deployer, it gets latest changes install them without changing your configuration files(`app.conf` and `deployment.yml`)
+- `update.sh`: This script is used to update GitHub auto deployer, it gets latest changes and install them without changing your configuration files(`app.conf` and `deployment.yml`)
 
 - `uninstall.sh`: This is used to uninstall GitHub auto deloyer, it basically deletes the `~/.github-auto-deployer` directory.
 
