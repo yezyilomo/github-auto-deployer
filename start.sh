@@ -1,10 +1,20 @@
 #!/bin/bash
+
+# Get app.conf dir
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
+APP_CONF_PATH=$SCRIPT_DIR/app.conf;
+
+
+# Default configurations
 PORT=6767;
-MY_SECRET=<Your Webhook Secret>;
 APP_NAME=github-auto-deployer;
 APP_DIR=~/.github-auto-deployer;
 APP_ENTRY_POINT=$APP_DIR/index.js;
 DEPLOYMENT_FILE=$APP_DIR/deployment.yml;
+
+
+# Custom configurations
+. $APP_CONF_PATH
 
 
 # Start script(Do not edit it)

@@ -21,6 +21,7 @@ fi;
 mkdir $DESTINATION_DIR &&
 
 cd $SCRIPT_DIR &&
+cp app.conf $DESTINATION_DIR &&
 cp start.sh $DESTINATION_DIR &&
 cp index.js $DESTINATION_DIR &&
 cp yarn.lock $DESTINATION_DIR &&
