@@ -38,3 +38,10 @@ That's it..
 Your service will be running on port 6767 by default, You can try to access it with https://yourserveraddress.com:6767, If you want to run on another port you can specify it with `PORT` option in `app.conf` file.
 
 NOTE: All configurations should be done on `~/.github-auto-deployer` directory which is created after running `install.sh` script, You should change nothing on the directory of cloned repository.
+
+More options
+- `update.sh`: This script is used to update GitHub auto deployer, it gets latest changes install them without changing your configuration files(`app.conf` and `deployment.yml`)
+
+- `uninstall.sh`: This is used to uninstall GitHub auto deloyer, it basically deletes the `~/.github-auto-deployer` directory.
+
+- To allow deployment service to start automatically when your server is rebooted use `pm2 startup`, check https://pm2.keymetrics.io/docs/usage/startup/ for more details on pm2 Startup script.
