@@ -1,12 +1,17 @@
 #!/bin/bash
 
+# Text colors
+red=`tput setaf 1`;
+green=`tput setaf 2`;
+reset=`tput sgr0`;
+
 # Get install script dir
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 APP_DIR=~/.github-auto-deployer;
 
 if [ -d $APP_DIR ]
 then
-    echo -n "Directory $APP_DIR already exists. Are you sure you want to delete it and re-install? [Y/n]  ";
+    echo -n "Looks like GitHub Auto Deployer is already installed in the directory '$APP_DIR'. Are you sure you want to delete it and re-install? [Y/n]  ";
     read response;
     
     if [ $response = "Y" ] || [ $response = "y" ]
@@ -32,4 +37,6 @@ cp deployment.yml $APP_DIR &&
 cd $APP_DIR &&
 
 yarn install &&
-yarn global add pm2
+yarn global add pm2 &&
+
+echo "${green}GitHub Auto Deployer is successfully installed on '$APP_DIR' directory.${reset}"
