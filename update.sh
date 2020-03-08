@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Text colors
+red=`tput setaf 1`;
+green=`tput setaf 2`;
+reset=`tput sgr0`;
+
 # Get update script dir
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 APP_DIR=~/.github-auto-deployer;
@@ -25,7 +30,8 @@ then
     rm -r $APP_DIR &&
     . $SCRIPT_DIR/install.sh &&
     echo "$APP_CONF" > $APP_DIR/app.conf &&
-    echo "$DEPLOYMENT_SCRIPTS" > $APP_DIR/deployment.yml;
+    echo "$DEPLOYMENT_SCRIPTS" > $APP_DIR/deployment.yml &&
+    echo "${green}GitHub Auto Deployer is successfully updated.${reset}";
 else
     echo "GitHub Auto Deployer is not installed, Execute `install.sh` to install it.";
     exit;
