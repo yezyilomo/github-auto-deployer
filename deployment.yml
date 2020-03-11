@@ -1,16 +1,23 @@
 # Demo deployment file
-# Delete this and put your deployment scripts here
+# Delete this and put your deployment configuration here
 
 settle-frontend:  # Repository Name(Should match the one on GitHub)
-  # Commands to run on your server during deployment
-  - cd /var/www/settle/frontend/ 
-  - git pull origin master 
-  - yarn install 
-  - yarn run build 
+  - directory:  # Repository dir
+      - /var/www/settle/frontend/
+  - branch:   # Branch to pull
+      - master
+  - strategy:
+      - pull  # pull/fetch-merge
+  - script:
+      - deployment.sh  # script name to run
 
 
 settle:  # Repository Name(Should match the one on GitHub)
-  # Commands to run on your server during deployment
-  - cd ~/settle/ 
-  - git pull origin master 
-  - python manage.py migrate
+  - directory:  # Repository dir
+      - ~/settle/
+  - branch:   # Branch to pull
+      - master
+  - strategy:
+      - pull  # pull/fetch-merge
+  - script:
+      - deployment.sh  # script name to run

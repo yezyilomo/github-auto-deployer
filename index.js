@@ -41,6 +41,29 @@ handler.on('error', function (err) {
     console.error('Error:', err.message)
 })
 
+
+function repoConfig(configFilePath, repo){
+    const fileContents = fs.readFileSync(configFilePath, 'utf8');
+    const config = yaml.safeLoadAll(fileContents)[0];
+    if (config[repo] !== undefined){
+        return config[repo][0];
+    }
+    return undefined; // No config for given repository
+}
+
+function getConfig(configObj, configName){
+    if (configObj[configName] !== undefined){
+        return configObj[configName][0]
+    }
+    const DEFAULT_CONFIG = {
+        "branch": "master",
+        "strategy": "pull",
+        "script": "deployment.sh"
+    }
+    return DEFAULT_CONFIG[configName]
+}
+
+
 handler.on('pull_request', function (event) {
     const repository = event.payload.repository.name;
     const action = event.payload.action;
@@ -49,18 +72,34 @@ handler.on('pull_request', function (event) {
     console.log('Received a Pull Request for %s to %s', repository, action);
     // The action `closed` on pull_request event means it is either merged or declined
     if (action === 'closed' && isMerged) {
-        // Read deployment scripts
-        const fileContents = fs.readFileSync(DEPLOYMENT_FILE, 'utf8');
-        const scripts = yaml.safeLoadAll(fileContents)[0];
+        // Read deployment repository configuration
+        const config = repoConfig(DEPLOYMENT_FILE, repository);
 
-        if (scripts[repository] !== undefined){
+        if (config !== undefined){
             // We should run deployment scripts
+            const directory = getConfig(config, "directory");
+            if (directory === undefined){
+                console.log('directory is not configured for %s repository.', repository);
+                return
+            }
+            
+            const branch = getConfig(config, "branch");
+            const script = getConfig(config, "script");
+            const strategy = getConfig(config, "strategy");
+            const strategies = {
+                "pull": `git pull origin ${branch}`,
+                "fetch-merge": `git fetch origin ${branch} && git merge`
+            }
+            const strategyCommand = strategies[strategy];
+            const commands = [`cd ${directory}`, strategyCommand];
+            
             console.log('Deploying %s...', repository);
-            shell.exec(scripts[repository].join(" && "));
+            shell.exec(commands.join(" && "));
+            shell.exec(`./${script}`)
             console.log('Deployment of %s is done.', repository);
         }
         else{
-            console.log('No deployment scripts for %s repository.', repository);
+            console.log('No configuration for %s repository.', repository);
         }
     }
 });
