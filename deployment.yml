@@ -1,23 +1,23 @@
-# Demo deployment file
-# Delete this and put your deployment configuration here
+# Demo repositories deployment configuration
+# Delete this and put your repositories deployment configuration here
 
-settle-frontend:  # Repository Name(Should match the one on GitHub)
-  - directory:  # Repository dir
-      - /var/www/settle/frontend/
-  - branch:   # Branch to pull
+repository_one:  # Repository Name(Should match the one on GitHub)
+  - directory:  # Repository/Working directory
+      - /repository_one/path/
+  - branch:   # Branch to pull(master is the default)
       - master
-  - strategy:
+  - strategy:  # Git Merge strategy(pull is the default)
       - pull  # pull/fetch-merge
-  - script:
-      - deployment.sh  # script name to run
+  - script:  # script name to run(deployment.sh is the default)
+      - deployment.sh
 
 
-settle:  # Repository Name(Should match the one on GitHub)
-  - directory:  # Repository dir
-      - ~/settle/
-  - branch:   # Branch to pull
+repository_two:  # Repository Name(Should match the one on GitHub)
+  - directory:  # Repository/Working directory
+      - /repository_two/path/
+  - branch:   # Branch to pull(master is the default)
       - master
-  - strategy:
+  - strategy:  # Git Merge strategy(pull is the default)
       - pull  # pull/fetch-merge
-  - script:
-      - deployment.sh  # script name to run
+  - script:  # script name to run(deployment.sh is the default)
+      - deployment.sh
