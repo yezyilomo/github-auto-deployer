@@ -99,7 +99,7 @@ handler.on('pull_request', function (event) {
             
             console.log('Deploying %s...', repository);
             shell.exec(commands.join(" && "));
-            const runDeploymentScript = `bash ${directory.replace(/\/$/, "")}/${script}`
+            const runDeploymentScript = `cd ${directory} && bash ${script}`;
             shell.exec(runDeploymentScript)
             console.log('Deployment of %s is done.', repository);
         }
