@@ -10,6 +10,9 @@ const createHandler = require('github-webhook-handler');
 // You should provide it with an ENV variable before running this script
 const MY_SECRET = process.env.MY_SECRET;
 
+// Get application directory
+const APP_DIR = process.env.APP_DIR;
+
 // Get deployment scripts file
 const DEPLOYMENT_FILE = process.env.DEPLOYMENT_FILE;
 
@@ -22,7 +25,8 @@ http.createServer(function (req, res) {
     let pathname = url.parse(req.url).pathname;
     handler(req, res, function (err) {
         if (req.url === "/" && req.method === "GET"){
-            fs.readFile('./index.html',function (err, data){
+            console.log(`${APP_DIR}/index.html`)
+            fs.readFile(`${APP_DIR}/index.html`,function (err, data){
                 res.writeHead(200, {'Content-Type': 'text/html','Content-Length': data.length});
                 res.write(data);
                 res.end();
@@ -79,7 +83,7 @@ handler.on('pull_request', function (event) {
             // We should run deployment scripts
             const directory = getConfig(config, "directory");
             if (directory === undefined){
-                console.log('directory is not configured for %s repository.', repository);
+                console.log('Directory is not configured for %s repository.', repository);
                 return
             }
             
@@ -95,7 +99,8 @@ handler.on('pull_request', function (event) {
             
             console.log('Deploying %s...', repository);
             shell.exec(commands.join(" && "));
-            shell.exec(`./${script}`)
+            const deploymentScript = `${directory.replace(/\/$/, "")}/${script}`
+            shell.exec(deploymentScript)
             console.log('Deployment of %s is done.', repository);
         }
         else{
