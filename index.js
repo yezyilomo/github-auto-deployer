@@ -99,8 +99,8 @@ handler.on('pull_request', function (event) {
             
             console.log('Deploying %s...', repository);
             shell.exec(commands.join(" && "));
-            const deploymentScript = `${directory.replace(/\/$/, "")}/${script}`
-            shell.exec(deploymentScript)
+            const runDeploymentScript = `bash ${directory.replace(/\/$/, "")}/${script}`
+            shell.exec(runDeploymentScript)
             console.log('Deployment of %s is done.', repository);
         }
         else{
