@@ -20,6 +20,7 @@ DEPLOYMENT_FILE=$APP_DIR/deployment.yml;
 # Start script(Do not edit it)
 PORT=$PORT \
 MY_SECRET=$MY_SECRET \
+APP_DIR=$APP_DIR \
 DEPLOYMENT_FILE=$DEPLOYMENT_FILE \
 pm2 --name $APP_NAME \
 start node -- $APP_ENTRY_POINT;

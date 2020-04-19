@@ -20,13 +20,16 @@ To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhoo
 - Add the Webhook secret
 - And finally you will have to specify events you would like to trigger this webhook, here you can select(check) Pull requests, this will trigger your webhook only when you create a pull request or merge(close) it, but the deployment will be done only when you merge your PR to master branch.
 
-Write your deployment scripts on `.github-auto-deployer/deployment.yml` file. E.g
+Configure the way to deploy your repository on `.github-auto-deployer/deployment.yml` file. E.g
 
 ```yaml
-repository_name:  # Repository Name(Should match the one on GitHub)
-  # Commands to run on your server during deployment
-  - cd repository_location/repository_name
-  - git pull origin master
+my_repository:  # Repository Name(Should match the one on GitHub)
+  - directory:  # Repository's working directory 
+      - /path/to/my_repository/
+  - get_changes:  # Commands to get new changes(git pull origin master is the default)
+      - git pull origin master
+  - script:  # script name to run during deployment(deployment.sh is the default)
+      - deployment.sh
 ```
 
 Run `start.sh` script i.e
