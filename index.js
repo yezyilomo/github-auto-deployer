@@ -57,12 +57,12 @@ function repoConfig(configFilePath, repo){
 
 function getConfig(configObj, configName){
     if (configObj[configName] !== undefined){
-        return configObj[configName][0]
+        return configObj[configName]
     }
     const DEFAULT_CONFIG = {
-        "branch": "master",
-        "strategy": "pull",
-        "script": "deployment.sh"
+        "directory": [undefined],  // Default repository's directory
+        "get_changes": ["git pull origin master"],  // Default get_changes command
+        "script": ["deployment.sh"],  // Default deployment script name
     }
     return DEFAULT_CONFIG[configName]
 }
@@ -81,26 +81,26 @@ handler.on('pull_request', function (event) {
 
         if (config !== undefined){
             // We should run deployment scripts
-            const directory = getConfig(config, "directory");
+            const directory = getConfig(config, "directory")[0];
             if (directory === undefined){
                 console.log('Directory is not configured for %s repository.', repository);
                 return
             }
             
-            const branch = getConfig(config, "branch");
-            const script = getConfig(config, "script");
-            const strategy = getConfig(config, "strategy");
-            const strategies = {
-                "pull": `git pull origin ${branch}`,
-                "fetch-merge": `git fetch origin ${branch} && git merge`
-            }
-            const strategyCommand = strategies[strategy];
-            const commands = [`cd ${directory}`, strategyCommand];
+            const deploymentScriptName = getConfig(config, "script")[0];
+            const getChanges = getConfig(config, "get_changes");
             
             console.log('Deploying %s...', repository);
-            shell.exec(commands.join(" && "));
-            const runDeploymentScript = `cd ${directory} && bash ${script}`;
-            shell.exec(runDeploymentScript)
+
+            const preDeploymentCommands = [
+                `cd ${directory}`,  // Go to repository directory
+                ...getChanges  // Get latest changes from GitHub
+            ];
+            shell.exec(preDeploymentCommands.join(" && "));  // Run pre-deployment commands
+
+            const runDeploymentScript = `cd ${directory} && bash ${deploymentScriptName}`;
+            shell.exec(runDeploymentScript);  // Run deployment script
+
             console.log('Deployment of %s is done.', repository);
         }
         else{
