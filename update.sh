@@ -33,6 +33,6 @@ then
     echo "$DEPLOYMENT_SCRIPTS" > $APP_DIR/deployment.yml &&
     echo "${green}GitHub Auto Deployer is successfully updated.${reset}";
 else
-    echo "GitHub Auto Deployer is not installed, Execute `install.sh` to install it.";
+    echo "GitHub Auto Deployer is not installed, Run `install.sh` to install it.";
     exit;
 fi;
