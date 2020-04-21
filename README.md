@@ -60,4 +60,4 @@ More options
 
 - To allow deployment service to start automatically when your server is rebooted use `pm2 startup`, check https://pm2.keymetrics.io/docs/usage/startup/ for more details on pm2 Startup script.
 
-**Note:** If your repository is private you should add deploy key to it for your server to be able to pull changes without requiring your GitHub credentials. If you want to know how to generate add deploy key to your GitHub repository visit https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys.
+**Note:** If your repository is private you should add deploy key to it for your server to be able to pull changes without requiring your GitHub credentials. If you want to know how to generate and add deploy key to your GitHub repository visit https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys.
