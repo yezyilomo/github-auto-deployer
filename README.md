@@ -23,6 +23,8 @@ To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhoo
 Configure the way to deploy your repository on `.github-auto-deployer/deployment.yml` file. E.g
 
 ```yaml
+# deployment.yml
+
 my_repository:  # Repository Name(Should match the one on GitHub)
   - directory:  # Repository's working directory 
       - /path/to/my_repository/
@@ -32,7 +34,16 @@ my_repository:  # Repository Name(Should match the one on GitHub)
       - deployment.sh
 ```
 
-Run `start.sh` script i.e
+Add `deployment.sh` file to your repository, this is a script to run when deploying your project. E.g
+
+```bash
+# deployment.sh
+
+npm install
+npm run build
+```
+
+To start deployment service run `start.sh` script i.e
 
 `bash start.sh`
 
