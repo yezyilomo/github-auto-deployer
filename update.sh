@@ -16,7 +16,7 @@ read response;
 if [ $response = "Y" ] || [ $response = "y" ]
 then
     echo "Downloading changes...";
-    git pull origin master
+    git pull origin $(git branch --show-current)
 else
     exit;
 fi &&

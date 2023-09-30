@@ -50,18 +50,20 @@ function repoConfig(configFilePath, repo){
     const fileContents = fs.readFileSync(configFilePath, 'utf8');
     const config = yaml.safeLoadAll(fileContents)[0];
     if (config[repo] !== undefined){
-        return config[repo][0];
+        return config[repo];
     }
     return undefined; // No config for given repository
 }
 
 function getConfig(configObj, configName){
-    if (configObj[configName] !== undefined){
-        return configObj[configName]
+    const configVal = configObj.find(config => config[configName]);
+
+    if (configVal !== undefined){
+        return configVal[configName];
     }
     const DEFAULT_CONFIG = {
         "directory": [undefined],  // Default repository's directory
-        "get_changes": ["git pull origin master"],  // Default get_changes command
+        "get_changes": ["git pull origin $(git branch --show-current)"],  // Pull from the current branch
         "script": ["deployment.sh"],  // Default deployment script name
     }
     return DEFAULT_CONFIG[configName]
@@ -79,6 +81,9 @@ handler.on('pull_request', function (event) {
         // Read deployment repository configuration
         const config = repoConfig(DEPLOYMENT_FILE, repository);
 
+        console.log("Loaded repository configurations");
+        console.log(config);
+
         if (config !== undefined){
             // We should run deployment scripts
             const directory = getConfig(config, "directory")[0];
@@ -91,6 +96,7 @@ handler.on('pull_request', function (event) {
             const getChanges = getConfig(config, "get_changes");
             
             console.log('Deploying %s...', repository);
+            console.log('Getting changes command: %s', getChanges);
 
             const preDeploymentCommands = [
                 `cd ${directory}`,  // Go to repository directory
