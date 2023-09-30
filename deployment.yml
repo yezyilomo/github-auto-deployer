@@ -4,8 +4,8 @@
 repository_one:  # Repository Name(Should match the one on GitHub)
   - directory:  # Repository's working directory
       - /path/to/repository_one/
-  - get_changes:  # Commands to get new changes(git pull origin master is the default)
-      - git pull origin master
+  - get_changes:  # Commands to get new changes(git pull origin $current-branch is the default)
+      - git pull origin main
   - script:  # script name to run(deployment.sh is the default)
       - deployment.sh
 
@@ -13,7 +13,7 @@ repository_one:  # Repository Name(Should match the one on GitHub)
 repository_two:  # Repository Name(Should match the one on GitHub)
   - directory:  # Repository/Working directory
       - /path/to/repository_two/
-  - get_changes:  # Commands to get new changes(git pull origin master is the default)
-      - git pull origin master
+  - get_changes:  # Commands to get new changes(git pull origin $current-branch is the default)
+      - git pull origin main
   - script:  # script name to run(deployment.sh is the default)
       - deployment.sh
