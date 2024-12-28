@@ -10,9 +10,9 @@ First Login to your server(Where you want to deploy to)
 
 `bash install.sh`
 
-Running `install.sh` script should create `.github-auto-deployer` directory on your home directory, now go to that directory and finish setting up few things as explained below.
+Running `install.sh` script should install all required dependencies and create `app.conf` and `deployment.yml` files in your folder, now open these two created files and finish setting up few things as explained below.
 
-Add Webhook Secret from the repository you want to deploy and put it on `<Put Your Webhook Secret Here>`  in `.github-auto-deployer/app.conf` file.
+Add Webhook Secret from the repository you want to deploy and put it on `<Put Your Webhook Secret Here>`  in `github-auto-deployer/app.conf` file.
 
 To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhook, Here you have to 
 - Add your server URL(The one pointing to github-auto-deployer service e.g https://yourserveraddress.com:6767)
@@ -20,7 +20,7 @@ To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhoo
 - Add the Webhook secret
 - And finally you will have to specify events you would like to trigger this webhook, here you can select(check) Pull requests, this will trigger your webhook only when you create a pull request or merge(close) it, but the deployment will be done only when you merge your PR to the main branch.
 
-Configure the way to deploy your repository on `.github-auto-deployer/deployment.yml` file. E.g
+Configure the way to deploy your repository on `github-auto-deployer/deployment.yml` file. E.g
 
 ```yaml
 # deployment.yml
@@ -51,12 +51,9 @@ To start deployment service run `start.sh` script i.e
 
 Your service will be running on port 6767 by default, You can try to access it with https://yourserveraddress.com:6767, If you want to run on another port you can specify it with `PORT` option in `app.conf` file.
 
-NOTE: All configurations should be done on `~/.github-auto-deployer` directory which is created after running `install.sh` script, You should change nothing on the directory of cloned repository.
 
 More options
 - `update.sh`: This script is used to update GitHub auto deployer, it gets latest changes and install them without changing your configuration files(`app.conf` and `deployment.yml`)
-
-- `uninstall.sh`: This is used to uninstall GitHub auto deloyer, it basically deletes the `~/.github-auto-deployer` directory.
 
 - To allow deployment service to start automatically when your server is rebooted use `pm2 startup`, check https://pm2.keymetrics.io/docs/usage/startup/ for more details on pm2 Startup script.
 
