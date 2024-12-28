@@ -1,5 +1,5 @@
 const fs = require('fs');
-const url = require("url");
+const url = require('url');
 const http = require('http');
 const yaml = require('js-yaml');
 const shell = require('shelljs');
@@ -24,17 +24,17 @@ var handler = createHandler({ path: '/', secret: MY_SECRET });
 http.createServer(function (req, res) {
     let pathname = url.parse(req.url).pathname;
     handler(req, res, function (err) {
-        if (req.url === "/" && req.method === "GET"){
+        if (req.url === "/" && req.method === "GET") {
             console.log(`${APP_DIR}/index.html`)
-            fs.readFile(`${APP_DIR}/index.html`,function (err, data){
-                res.writeHead(200, {'Content-Type': 'text/html','Content-Length': data.length});
+            fs.readFile(`${APP_DIR}/index.html`, function (err, data) {
+                res.writeHead(200, { 'Content-Type': 'text/html', 'Content-Length': data.length });
                 res.write(data);
                 res.end();
             });
         }
         else {
             console.log("No request handler found for " + pathname);
-            res.writeHead(404, {"Content-Type": "text/plain"});
+            res.writeHead(404, { "Content-Type": "text/plain" });
             res.write("404 Not found");
             res.end();
         }
@@ -46,19 +46,19 @@ handler.on('error', function (err) {
 })
 
 
-function repoConfig(configFilePath, repo){
+function repoConfig(configFilePath, repo) {
     const fileContents = fs.readFileSync(configFilePath, 'utf8');
     const config = yaml.safeLoadAll(fileContents)[0];
-    if (config[repo] !== undefined){
+    if (config[repo] !== undefined) {
         return config[repo];
     }
     return undefined; // No config for given repository
 }
 
-function getConfig(configObj, configName){
+function getConfig(configObj, configName) {
     const configVal = configObj.find(config => config[configName]);
 
-    if (configVal !== undefined){
+    if (configVal !== undefined) {
         return configVal[configName];
     }
     const DEFAULT_CONFIG = {
@@ -84,17 +84,17 @@ handler.on('pull_request', function (event) {
         console.log("Loaded repository configurations");
         console.log(config);
 
-        if (config !== undefined){
+        if (config !== undefined) {
             // We should run deployment scripts
             const directory = getConfig(config, "directory")[0];
-            if (directory === undefined){
+            if (directory === undefined) {
                 console.log('Directory is not configured for %s repository.', repository);
                 return
             }
-            
+
             const deploymentScriptName = getConfig(config, "script")[0];
             const getChanges = getConfig(config, "get_changes");
-            
+
             console.log('Deploying %s...', repository);
             console.log('Getting changes command: %s', getChanges);
 
@@ -109,7 +109,7 @@ handler.on('pull_request', function (event) {
 
             console.log('Deployment of %s is done.', repository);
         }
-        else{
+        else {
             console.log('No configuration for %s repository.', repository);
         }
     }
