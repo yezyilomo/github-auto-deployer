@@ -149,4 +149,8 @@ temp/
 # Ignore all local history of files
 .history
 
+# Configuration files
+app.conf
+deployment.yml
+
 # End of https://www.gitignore.io/api/git,node,linux,visualstudiocode

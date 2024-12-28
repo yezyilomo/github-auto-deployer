@@ -7,36 +7,59 @@ reset=`tput sgr0`;
 
 # Get install script dir
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
-APP_DIR=~/.github-auto-deployer;
 
-if [ -d $APP_DIR ]
+# App dir is same as install script dir
+APP_DIR=$SCRIPT_DIR;
+
+APP_CONF_FILE_PATH=$APP_DIR/app.conf;
+APP_DEPLOYMENT_FILE_PATH=$APP_DIR/deployment.yml;
+
+APP_CONF='# Write your configurations here
+MY_SECRET=<Put Your Webhook Secret Here>
+# PORT=6767
+';
+
+APP_DEPLOYMENT='# Demo repositories deployment configuration
+# Delete this and put your repositories deployment configuration here
+
+repository_one:  # Repository Name(Should match the one on GitHub)
+  - directory:  # Repository`s working directory
+      - /path/to/repository_one/
+  - get_changes:  # Commands to get new changes(git pull origin $current-branch is the default)
+      - git pull origin main
+  - script:  # script name to run(deployment.sh is the default)
+      - deployment.sh
+
+
+repository_two:  # Repository Name(Should match the one on GitHub)
+  - directory:  # Repository/Working directory
+      - /path/to/repository_two/
+  - get_changes:  # Commands to get new changes(git pull origin $current-branch is the default)
+      - git pull origin main
+  - script:  # script name to run(deployment.sh is the default)
+      - deployment.sh
+';
+
+
+if [ -f $APP_CONF_FILE_PATH ]
 then
-    echo -n "Looks like GitHub Auto Deployer is already installed in the directory '$APP_DIR'. Are you sure you want to delete it and re-install? [Y/n]  ";
-    read response;
-    
-    if [ $response = "Y" ] || [ $response = "y" ]
-    then
-        rm -r $APP_DIR;
-    else
-        exit;
-    fi;
+    echo -e "Configuration file found..";
+else
+    echo -e "Creating configuration file..";
+    echo "$APP_CONF" > $APP_CONF_FILE_PATH;
 fi;
 
 
-mkdir $APP_DIR &&
+if [ -f $APP_DEPLOYMENT_FILE_PATH ]
+then
+    echo -e "Deployment file found..";
+else
+    echo -e "Creating configuration file..";
+    echo "$APP_DEPLOYMENT" > $APP_DEPLOYMENT_FILE_PATH;
+fi;
 
-cd $SCRIPT_DIR &&
-cp app.conf $APP_DIR &&
-cp start.sh $APP_DIR &&
-cp index.js $APP_DIR &&
-cp yarn.lock $APP_DIR &&
-cp index.html $APP_DIR &&
-cp package.json $APP_DIR &&
-cp deployment.yml $APP_DIR &&
-
-cd $APP_DIR &&
-
-yarn install &&
-yarn global add pm2 &&
+cd $APP_DIR;
+npm install;
+npm install pm2 -g
 
 echo "${green}GitHub Auto Deployer is successfully installed on '$APP_DIR' directory.${reset}"
