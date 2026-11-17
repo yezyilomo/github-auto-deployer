@@ -12,7 +12,7 @@ First Login to your server(Where you want to deploy to)
 
 Running `install.sh` script should install all required dependencies and create `app.conf` and `deployment.yml` files in your folder, now open these two created files and finish setting up few things as explained below.
 
-Add Webhook Secret from the repository you want to deploy and put it on `<Put Your Webhook Secret Here>`  in `github-auto-deployer/app.conf` file.
+Add Webhook Secret from the repository you want to deploy and put it on `Put-Your-Webhook-Secret-Here`  in `github-auto-deployer/app.conf` file.
 
 To add a webhook go to Your GitHub repository > Settings > Webhooks > Add Webhook, Here you have to 
 - Add your server URL(The one pointing to github-auto-deployer service e.g https://yourserveraddress.com:6767)

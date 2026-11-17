@@ -19,7 +19,7 @@ then
     echo "Downloading changes...";
     git pull origin $(git branch --show-current)
 else
-    exit;
+    exit
 fi &&
 
 echo "Installing changes...";

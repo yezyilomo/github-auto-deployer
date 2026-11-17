@@ -10,6 +10,7 @@ APP_CONF_FILE_PATH=$APP_DIR/app.conf;
 
 # Default configurations
 PORT=6767;
+HOST=0.0.0.0
 MY_SECRET=;
 APP_NAME=github-auto-deployer;
 APP_ENTRY_POINT=$APP_DIR/index.js;
@@ -20,6 +21,7 @@ DEPLOYMENT_FILE=$APP_DIR/deployment.yml;
 
 # Start script(Do not edit it)
 PORT=$PORT \
+HOST=$HOST \
 MY_SECRET=$MY_SECRET \
 APP_DIR=$APP_DIR \
 DEPLOYMENT_FILE=$DEPLOYMENT_FILE \

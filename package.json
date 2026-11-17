@@ -8,8 +8,8 @@
   "license": "MIT",
   "dependencies": {
     "github-webhook-handler": "^1.0.0",
-    "js-yaml": "^3.14.1",
-    "pm2": "^5.4.3",
+    "js-yaml": "^5.5.0",
+    "pm2": "^7.0.4",
     "shelljs": "^0.8.5"
   }
 }
