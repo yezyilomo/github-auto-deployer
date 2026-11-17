@@ -1,5 +1,4 @@
 const fs = require('fs');
-const url = require('url');
 const http = require('http');
 const yaml = require('js-yaml');
 const shell = require('shelljs');
@@ -16,39 +15,53 @@ const APP_DIR = process.env.APP_DIR;
 // Get deployment scripts file
 const DEPLOYMENT_FILE = process.env.DEPLOYMENT_FILE;
 
+// Get host if not provided us "0.0.0.0" as the default
+const HOST = process.env.HOST || "0.0.0.0";
+
 // Get port if not provided us 6767 as the default
 const PORT = process.env.PORT || 6767;
 
 var handler = createHandler({ path: '/', secret: MY_SECRET });
 
 http.createServer(function (req, res) {
-    let pathname = url.parse(req.url).pathname;
     handler(req, res, function (err) {
-        if (req.url === "/" && req.method === "GET") {
+        let pathname = "/";
+
+        try {
+            // Using a static base avoids malformed Host header crashes
+            pathname = new URL(req.url, 'http://localhost').pathname;
+        } catch {
+            // Handle malformed URLs (e.g., return a 400 Bad Request)
+            res.writeHead(400);
+            return res.end('Bad Request');
+        }
+
+        if (pathname === "/" && req.method === "GET") {
             console.log(`${APP_DIR}/index.html`)
             fs.readFile(`${APP_DIR}/index.html`, function (err, data) {
-                res.writeHead(200, { 'Content-Type': 'text/html', 'Content-Length': data.length });
-                res.write(data);
-                res.end();
+                if (err) {
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    return res.end('Internal Server Error');
+                }
+
+                res.writeHead(200, {
+                    'Content-Type': 'text/html', 'Content-Length': data.length
+                });
+                res.end(data);
             });
         }
         else {
             console.log("No request handler found for " + pathname);
             res.writeHead(404, { "Content-Type": "text/plain" });
-            res.write("404 Not found");
-            res.end();
+            res.end("404 Not found");
         }
     })
-}).listen(PORT);
-
-handler.on('error', function (err) {
-    console.error('Error:', err.message)
-})
+}).listen(PORT, HOST);
 
 
 function repoConfig(configFilePath, repo) {
     const fileContents = fs.readFileSync(configFilePath, 'utf8');
-    const config = yaml.safeLoadAll(fileContents)[0];
+    const config = yaml.loadAll(fileContents)[0];
     if (config[repo] !== undefined) {
         return config[repo];
     }
@@ -114,3 +127,7 @@ handler.on('pull_request', function (event) {
         }
     }
 });
+
+handler.on('error', function (err) {
+    console.error('Error:', err.message)
+})

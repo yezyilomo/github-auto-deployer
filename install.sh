@@ -15,8 +15,10 @@ APP_CONF_FILE_PATH=$APP_DIR/app.conf;
 APP_DEPLOYMENT_FILE_PATH=$APP_DIR/deployment.yml;
 
 APP_CONF='# Write your configurations here
-MY_SECRET=<Put Your Webhook Secret Here>
-# PORT=6767
+# MY_SECRET=Put-Your-Webhook-Secret-Here;
+# PORT=6767;
+# HOST=0.0.0.0;
+# APP_NAME=github-auto-deployer;
 ';
 
 APP_DEPLOYMENT='# Demo repositories deployment configuration
@@ -54,12 +56,12 @@ if [ -f $APP_DEPLOYMENT_FILE_PATH ]
 then
     echo -e "Deployment file found..";
 else
-    echo -e "Creating configuration file..";
+    echo -e "Creating deployment file..";
     echo "$APP_DEPLOYMENT" > $APP_DEPLOYMENT_FILE_PATH;
 fi;
 
 cd $APP_DIR;
 npm install;
-npm install pm2 -g
+npm install pm2 -g;
 
-echo "${green}GitHub Auto Deployer is successfully installed on '$APP_DIR' directory.${reset}"
+echo "${green}GitHub Auto Deployer is successfully installed${reset}";
